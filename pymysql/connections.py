@@ -772,7 +772,9 @@ class Connection(object):
 
     def _request_authentication(self):
         # https://dev.mysql.com/doc/internals/en/connection-phase-packets.html#packet-Protocol::HandshakeResponse
-        if int(self.server_version.split('.', 1)[0]) >= 5:
+        if self.server_version.split('.', 1)[0] == 'Inception2':
+            self.client_flag |= CLIENT.MULTI_RESULTS
+        elif int(self.server_version.split('.', 1)[0]) >= 5:
             self.client_flag |= CLIENT.MULTI_RESULTS
 
         if self.user is None:
